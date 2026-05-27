@@ -172,6 +172,41 @@ html,body{height:100%;background:var(--gray-50);font-family:'DM Sans',sans-serif
 
 .section-label{font-size:10px;font-weight:600;color:var(--gray-500);text-transform:uppercase;letter-spacing:.08em;margin-bottom:12px}
 .mb16{margin-bottom:16px}
+
+/* ── MOBILE RESPONSIVE ─────────────────────────────────────────────────── */
+.hamburger{display:none;align-items:center;justify-content:center;width:36px;height:36px;border:none;background:none;cursor:pointer;border-radius:var(--radius-sm);flex-shrink:0}
+.hamburger:hover{background:var(--gray-100)}
+.hamburger svg{width:20px;height:20px;stroke:var(--gray-700);fill:none;stroke-width:2}
+.sidebar-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.35);z-index:98}
+.sidebar-overlay.open{display:block}
+.dt-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch}
+
+@media(max-width:768px){
+  .hamburger{display:flex}
+  .sidebar{position:fixed;left:-var(--sidebar-w);left:-220px;top:0;bottom:0;z-index:99;transform:translateX(-100%);transition:transform .25s ease;box-shadow:var(--shadow-lg)}
+  .sidebar.open{transform:translateX(0)}
+  .topbar{padding:0 14px;gap:8px}
+  .tb-sub{display:none}
+  .auction-sel{min-width:0;width:100%;font-size:11px}
+  .btn-nav .btn-label{display:none}
+  .btn-nav{padding:6px 8px;min-width:32px;justify-content:center}
+  .content{padding:14px}
+  .kpi-grid{grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px}
+  .g2,.g3,.g4{grid-template-columns:1fr;gap:12px}
+  .g2>.card{height:auto}
+  .overview-grid-wrap{grid-template-columns:repeat(2,1fr)!important}
+  .page-header h1{font-size:16px}
+  .kpi-value{font-size:18px}
+  .fin-grid-wrap{grid-template-columns:1fr 1fr!important}
+  .card{padding:14px 14px}
+  .tb-title{font-size:13px}
+}
+
+@media(max-width:420px){
+  .kpi-grid{grid-template-columns:1fr}
+  .overview-grid-wrap{grid-template-columns:1fr!important}
+  .fin-grid-wrap{grid-template-columns:1fr!important}
+}
 </style>
 </head>
 <body>
@@ -219,13 +254,17 @@ html,body{height:100%;background:var(--gray-50);font-family:'DM Sans',sans-serif
       </div>
     </div>
   </aside>
+  <div class="sidebar-overlay" id="sidebarOverlay" onclick="toggleSidebar()"></div>
 
   <!-- MAIN -->
   <div class="main">
 
     <!-- TOPBAR -->
     <div class="topbar">
-      <div style="flex:1;min-width:0">
+      <button class="hamburger" onclick="toggleSidebar()" aria-label="Menu">
+        <svg viewBox="0 0 24 24"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+      </button>
+      <div style="flex:1;min-width:0;overflow:hidden">
         <div class="tb-title" id="topbarTitle">Leilões de Garantias de Origem</div>
         <div class="tb-sub" id="topbarSub">Visão geral e histórico</div>
       </div>
@@ -234,10 +273,10 @@ html,body{height:100%;background:var(--gray-50);font-family:'DM Sans',sans-serif
       </select>
       <button class="btn-nav" id="prevBtn" onclick="navigate(-1)" disabled>
         <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>
-        Anterior
+        <span class="btn-label">Anterior</span>
       </button>
       <button class="btn-nav" id="nextBtn" onclick="navigate(1)">
-        Seguinte
+        <span class="btn-label">Seguinte</span>
         <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>
       </button>
     </div>
@@ -313,7 +352,7 @@ html,body{height:100%;background:var(--gray-50);font-family:'DM Sans',sans-serif
         </div>
 
         <div class="section-label">Todos os leilões — clica para ver o detalhe</div>
-        <div id="ovGrid" style="display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin-bottom:20px"></div>
+        <div id="ovGrid" class="overview-grid-wrap" style="display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin-bottom:20px"></div>
 
         <div class="card">
           <div class="card-title">Próximos leilões previstos</div>
@@ -1803,6 +1842,14 @@ function fe(n){
 function badge(t){return `<span class="tech ${TCLS[t]||'t-v'}"><span class="td"></span>${t}</span>`}
 
 // ── SELECT ───────────────────────────────────────────────────────────────────
+
+function toggleSidebar(){
+  const sb=document.querySelector('.sidebar');
+  const ov=document.getElementById('sidebarOverlay');
+  sb.classList.toggle('open');
+  ov.classList.toggle('open');
+}
+
 function buildSelect(){
   const sel=document.getElementById('auctionSel');
   CNUMS.forEach(n=>{
@@ -1849,6 +1896,9 @@ function navigate(d){
   if(nx!==undefined)showPage(nx);
 }
 function activateSidebarItem(el){
+  // close sidebar on mobile after selection
+  document.querySelector('.sidebar').classList.remove('open');
+  document.getElementById('sidebarOverlay').classList.remove('open');
   document.querySelectorAll('.sidebar-item').forEach(i=>i.classList.remove('active'));
   el.classList.add('active');
   const act=el.dataset.activity;
@@ -1963,7 +2013,7 @@ function buildPages(){
       <div class="card mb16">
         <div class="card-title">Resultados por lote</div>
         <div class="card-sub">${a.lots} lotes com colocação total</div>
-        <table class="dt">
+        <div class="dt-wrap"><table class="dt">
           <thead><tr>
             <th>Lote</th><th>Tecnologia</th><th>Período</th>
             <th class="r">Vol. Leiloado (MWh)</th><th class="r">Vol. Vendido (MWh)</th>
@@ -1977,7 +2027,7 @@ function buildPages(){
             <td class="r mono">${a.avgPrice.toFixed(2).replace('.',',')} (méd.)</td>
             <td class="r">${a.participants}</td>
           </tr></tfoot>
-        </table>
+        </table></div>
       </div>
       <div class="g2">
         <div class="card viz-card">
