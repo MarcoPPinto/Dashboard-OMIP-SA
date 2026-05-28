@@ -404,6 +404,175 @@ html,body{height:100%;background:var(--gray-50);font-family:'DM Sans',sans-serif
 
 <script>
 const AUCTIONS = {
+  35: {
+  "num": 35,
+  "date": "13 mai 2026",
+  "totalLei": 3225407,
+  "totalVen": 3225407,
+  "avgPrice": 1.92,
+  "participants": 27,
+  "lots": 5,
+  "receita": 6187440.91,
+  "feeOmip": 16127.03,
+  "garantias": 12738488.56,
+  "lotes": [
+    {
+      "n": 1,
+      "tech": "Solar",
+      "periodo": "Jan-26, Fev-26, Mar-26",
+      "leiloado": 90169,
+      "vendido": 90169,
+      "preco": 1.96,
+      "compradores": 3
+    },
+    {
+      "n": 2,
+      "tech": "Eólica",
+      "periodo": "Jan-26, Fev-26, Mar-26",
+      "leiloado": 2715423,
+      "vendido": 2715423,
+      "preco": 1.92,
+      "compradores": 13
+    },
+    {
+      "n": 3,
+      "tech": "Hídrica",
+      "periodo": "Fev-26, Mar-26",
+      "leiloado": 208991,
+      "vendido": 208991,
+      "preco": 1.96,
+      "compradores": 5
+    },
+    {
+      "n": 4,
+      "tech": "Térmica",
+      "periodo": "Fev-26, Mar-26",
+      "leiloado": 203099,
+      "vendido": 203099,
+      "preco": 1.85,
+      "compradores": 8
+    },
+    {
+      "n": 5,
+      "tech": "Várias",
+      "periodo": "Abr-25 a Dez-25",
+      "leiloado": 7725,
+      "vendido": 7725,
+      "preco": 1.52,
+      "compradores": 3
+    }
+  ],
+  "topParticipantes": [
+    {
+      "n": "Shell Energy Europe Limited",
+      "v": 3000000.0
+    },
+    {
+      "n": "Endesa Generación S.A.",
+      "v": 2000000.0
+    },
+    {
+      "n": "Nvalue AG",
+      "v": 1030000.0
+    },
+    {
+      "n": "STX Commodities B.V.",
+      "v": 1030000.0
+    },
+    {
+      "n": "Iberdrola Energía España, S.A.U.",
+      "v": 1000000.0
+    },
+    {
+      "n": "ORIGO",
+      "v": 640000.0
+    },
+    {
+      "n": "ACT COMMODITIES B.V.",
+      "v": 624000.0
+    },
+    {
+      "n": "Opti-Ment BV",
+      "v": 485000.0
+    },
+    {
+      "n": "Caely Renewables B.V.",
+      "v": 400000.0
+    },
+    {
+      "n": "Faraday Trading B.V.",
+      "v": 386240.0
+    },
+    {
+      "n": "GO2-markets GmbH",
+      "v": 300000.0
+    },
+    {
+      "n": "Trailstone Renewables GmbH",
+      "v": 300000.0
+    },
+    {
+      "n": "Poligrand Energy S.P.A.",
+      "v": 200000.0
+    },
+    {
+      "n": "Gold Energy - Comercializadora de Energia S.A.",
+      "v": 181056.0
+    },
+    {
+      "n": "Meo Energia Comercialização de Energia S.A.",
+      "v": 174256.56
+    },
+    {
+      "n": "ENGIE GLOBAL MARKETS",
+      "v": 160000.0
+    },
+    {
+      "n": "Moeve Gas and Power S.A.",
+      "v": 150000.0
+    },
+    {
+      "n": "DXT Commodities S.A.",
+      "v": 124800.0
+    },
+    {
+      "n": "Acciona Green Energy Developments SL Sucursal em Portugal",
+      "v": 102336.0
+    },
+    {
+      "n": "AFS Energy B.V.",
+      "v": 100000.0
+    },
+    {
+      "n": "Petrogal, S.A.",
+      "v": 82000.0
+    },
+    {
+      "n": "Achieve Now B.V.",
+      "v": 64000.0
+    },
+    {
+      "n": "METECO ENERGIA VERDE, S.L.",
+      "v": 64000.0
+    },
+    {
+      "n": "OTC Flow B.V.",
+      "v": 64000.0
+    },
+    {
+      "n": "Clax Renewables B.V.",
+      "v": 41600.0
+    },
+    {
+      "n": "Repower AG",
+      "v": 19200.0
+    },
+    {
+      "n": "Global Factor Green Markets, S.A.",
+      "v": 16000.0
+    }
+  ]
+},
   1: {
     num: 1, date: '28 jul 2021',
     totalVol: 3422808, avgPrice: 0.24, participants: 34, lots: 8,
@@ -1801,178 +1970,7 @@ const AUCTIONS = {
       {n:'Faraday Trading B.V.',v:611200},
       {n:'Outros (21)',v:3291784},
     ]
-  },
-
-  35: {
-  "num": 35,
-  "date": "13 Mai 2026",
-  "totalLei": 3225407,
-  "totalVen": 3225407,
-  "avgPrice": 1.9183,
-  "participants": 27,
-  "lots": 5,
-  "receita": 6187440.91,
-  "feeOmip": 16127.03,
-  "garantias": 12738488.56,
-  "lotes": [
-    {
-      "n": 1,
-      "tech": "Solar",
-      "periodo": "Jan-26, Fev-26, Mar-26",
-      "leiloado": 90169,
-      "vendido": 90169,
-      "preco": 1.96,
-      "compradores": 3
-    },
-    {
-      "n": 2,
-      "tech": "Eólica",
-      "periodo": "Jan-26, Fev-26, Mar-26",
-      "leiloado": 2715423,
-      "vendido": 2715423,
-      "preco": 1.92,
-      "compradores": 13
-    },
-    {
-      "n": 3,
-      "tech": "Hídrica",
-      "periodo": "Fev-26, Mar-26",
-      "leiloado": 208991,
-      "vendido": 208991,
-      "preco": 1.96,
-      "compradores": 5
-    },
-    {
-      "n": 4,
-      "tech": "Térmica",
-      "periodo": "Fev-26, Mar-26",
-      "leiloado": 203099,
-      "vendido": 203099,
-      "preco": 1.85,
-      "compradores": 8
-    },
-    {
-      "n": 5,
-      "tech": "Várias",
-      "periodo": "Abr-25 a Dez-25",
-      "leiloado": 7725,
-      "vendido": 7725,
-      "preco": 1.52,
-      "compradores": 3
-    }
-  ],
-  "topParticipantes": [
-    {
-      "n": "Shell Energy Europe Limited",
-      "v": 3000000.0
-    },
-    {
-      "n": "Endesa Generación S.A.",
-      "v": 2000000.0
-    },
-    {
-      "n": "Nvalue AG",
-      "v": 1030000.0
-    },
-    {
-      "n": "STX Commodities B.V.",
-      "v": 1030000.0
-    },
-    {
-      "n": "Iberdrola Energía España, S.A.U.",
-      "v": 1000000.0
-    },
-    {
-      "n": "ORIGO",
-      "v": 640000.0
-    },
-    {
-      "n": "ACT COMMODITIES B.V.",
-      "v": 624000.0
-    },
-    {
-      "n": "Opti-Ment BV",
-      "v": 485000.0
-    },
-    {
-      "n": "Caely Renewables B.V.",
-      "v": 400000.0
-    },
-    {
-      "n": "Faraday Trading B.V.",
-      "v": 386240.0
-    },
-    {
-      "n": "Trailstone Renewables GmbH",
-      "v": 300000.0
-    },
-    {
-      "n": "GO2-markets GmbH",
-      "v": 300000.0
-    },
-    {
-      "n": "Poligrand Energy S.P.A.",
-      "v": 200000.0
-    },
-    {
-      "n": "‌Gold Energy - Comercializadora de Energia S.A.",
-      "v": 181056.0
-    },
-    {
-      "n": "Meo Energia Comercialização de Energia S.A.",
-      "v": 174256.56
-    },
-    {
-      "n": "ENGIE GLOBAL MARKETS",
-      "v": 160000.0
-    },
-    {
-      "n": "Moeve Gas and Power S.A.",
-      "v": 150000.0
-    },
-    {
-      "n": "DXT Commodities S.A.",
-      "v": 124800.0
-    },
-    {
-      "n": "Acciona Green Energy Developments SL Sucursal em Portugal",
-      "v": 102336.0
-    },
-    {
-      "n": "AFS Energy B.V.",
-      "v": 100000.0
-    },
-    {
-      "n": "Petrogal, S.A.",
-      "v": 82000.0
-    },
-    {
-      "n": "Achieve Now B.V.",
-      "v": 64000.0
-    },
-    {
-      "n": "METECO ENERGIA VERDE, S.L.",
-      "v": 64000.0
-    },
-    {
-      "n": "OTC Flow B.V.",
-      "v": 64000.0
-    },
-    {
-      "n": "Clax Renewables B.V.",
-      "v": 41600.0
-    },
-    {
-      "n": "Repower AG",
-      "v": 19200.0
-    },
-    {
-      "n": "Global Factor Green Markets, S.A.",
-      "v": 16000.0
-    }
-  ]
-},
-};
+  },};
 // ── CONFIG ──────────────────────────────────────────────────────────────────
 const TC = {Solar:'#C47A00',Eólica:'#6B7685',Hídrica:'#1B6FC8',Térmica:'#C0392B',Várias:'#5B4FCF'};
 const TB = {Solar:'#FFF3DC',Eólica:'#EEF0F4',Hídrica:'#EBF3FC',Térmica:'#FDECEA',Várias:'#EEEDFE'};
@@ -1983,18 +1981,18 @@ const TCLS={Solar:'t-s',Eólica:'t-e',Hídrica:'t-h',Térmica:'t-th',Várias:'t-
 // Os valores calculáveis de cada leilão são derivados abaixo a partir dos lotes.
 const NEXT_AUCTIONS = [
   {
-    "num": 36,
-    "date": "08 Jul 2026",
+    "num": 33,
+    "date": "14 jan 2026",
     "label": "Leilão GO-PT"
   },
   {
-    "num": 37,
-    "date": "09 Set 2026",
+    "num": 34,
+    "date": "11 mar 2026",
     "label": "Leilão GO-PT"
   },
   {
-    "num": 38,
-    "date": "11 Nov 2026",
+    "num": 35,
+    "date": "13 mai 2026",
     "label": "Leilão GO-PT"
   }
 ];
