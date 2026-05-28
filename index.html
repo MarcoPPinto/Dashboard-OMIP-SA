@@ -237,7 +237,7 @@ html,body{height:100%;background:var(--gray-50);font-family:'DM Sans',sans-serif
       <button class="sidebar-item active" data-activity="go" onclick="activateSidebarItem(this)">
         <svg viewBox="0 0 24 24"><path d="M12 3v18"/><path d="M7 7h10"/><path d="M6 11h12"/><path d="M8 15h8"/><path d="M5 21h14"/><path d="M9 3h6"/></svg>
         Leilões GO
-        <span class="s-badge">35</span>
+        <span class="s-badge" id="auctionCountBadge">—</span>
       </button>
 
       <button class="sidebar-item" data-activity="gig" onclick="activateSidebarItem(this)">
@@ -251,6 +251,15 @@ html,body{height:100%;background:var(--gray-50);font-family:'DM Sans',sans-serif
       </button>
     </div>
 
+    <div class="sidebar-footer">
+      <div class="user-row">
+        <div class="user-av">MP</div>
+        <div>
+          <div class="user-name">Marco Pinto</div>
+          <div class="user-email">marco.pinto@omipsa.pt</div>
+        </div>
+      </div>
+    </div>
   </aside>
   <div class="sidebar-overlay" id="sidebarOverlay" onclick="toggleSidebar()"></div>
 
@@ -285,34 +294,33 @@ html,body{height:100%;background:var(--gray-50);font-family:'DM Sans',sans-serif
       <!-- OVERVIEW PAGE -->
       <div class="page active" id="page-overview">
         <div class="page-header">
-          <h1>35 leilões realizados · Julho 2021 — Maio 2026</h1>
+          <h1 id="ovTitle">Leilões de Garantias de Origem</h1>
         </div>
 
         <div class="kpi-grid">
           <div class="kpi-card">
-		    <div class="kpi-icon ic-amber"><svg viewBox="0 0 24 24"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg></div>
+            <div class="kpi-icon ic-amber"><svg viewBox="0 0 24 24"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg></div>
             <div class="kpi-label">Volume total transacionado</div>
-            <div class="kpi-value">43,8MWh</div>
-            <div class="kpi-sub">35 leilões realizados</div>
+            <div class="kpi-value" id="ovVolume">—</div>
+            <div class="kpi-sub" id="ovVolumeSub">—</div>
           </div>
-		  <div class="kpi-card">
+          <div class="kpi-card">
             <div class="kpi-icon ic-green"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>
             <div class="kpi-label">Taxa de colocação</div>
-            <div class="kpi-value">100%</div>
-            <div class="kpi-sub">todos os lotes · todos os leilões</div>
+            <div class="kpi-value" id="ovPlacement">—</div>
+            <div class="kpi-sub" id="ovPlacementSub">—</div>
           </div>
           <div class="kpi-card">
             <div class="kpi-icon ic-green"><svg viewBox="0 0 24 24"><path d="M18 7a7 7 0 1 0 0 10"/><line x1="6" y1="10" x2="14" y2="10"/><line x1="6" y1="14" x2="14" y2="14"/></svg></div>
-            <div class="kpi-label">Receita Total acumulada</div>
-            <div class="kpi-value">159,2M€</div>
+            <div class="kpi-label">Receita total acumulada</div>
+            <div class="kpi-value" id="ovReceita">—</div>
             <div class="kpi-sub">produto entre o volume vendido e o preço marginal</div>
           </div>
-
           <div class="kpi-card">
             <div class="kpi-icon ic-green"><svg viewBox="0 0 24 24"><path d="M18 7a7 7 0 1 0 0 10"/><line x1="6" y1="10" x2="14" y2="10"/><line x1="6" y1="14" x2="14" y2="14"/></svg></div>
             <div class="kpi-label">Fee OMIP SA acumulada</div>
-            <div class="kpi-value">219K€</div>
-            <div class="kpi-sub">0,005 €/MWh aplicados sobre o volume total</div>
+            <div class="kpi-value" id="ovFee">—</div>
+            <div class="kpi-sub">0,005 €/MWh aplicados sobre o volume vendido</div>
           </div>
         </div>
 
@@ -354,12 +362,8 @@ html,body{height:100%;background:var(--gray-50);font-family:'DM Sans',sans-serif
 
         <div class="card">
           <div class="card-title">Próximos leilões previstos</div>
-          <div class="card-sub">Calendário OMIP 2026</div>
-          <div class="g3" style="margin-bottom:0;margin-top:8px">
-            <div class="fut-item"><div class="fut-num">36</div><div><div class="fut-lbl">Leilão GO-PT</div><div class="fut-date">08 jul 2026</div></div></div>
-            <div class="fut-item"><div class="fut-num">37</div><div><div class="fut-lbl">Leilão GO-PT</div><div class="fut-date">09 set 2026</div></div></div>
-            <div class="fut-item"><div class="fut-num">38</div><div><div class="fut-lbl">Leilão GO-PT</div><div class="fut-date">11 nov 2026</div></div></div>
-          </div>
+          <div class="card-sub" id="futureAuctionsSub">Calendário OMIP</div>
+          <div id="futureAuctions" class="g3" style="margin-bottom:0;margin-top:8px"></div>
         </div>
       </div>
 
@@ -1826,8 +1830,34 @@ const TB = {Solar:'#FFF3DC',Eólica:'#EEF0F4',Hídrica:'#EBF3FC',Térmica:'#FDEC
 const TT = {Solar:'#8A5500',Eólica:'#3A4250',Hídrica:'#0D4F9A',Térmica:'#8B1A1A',Várias:'#3A308A'};
 const TCLS={Solar:'t-s',Eólica:'t-e',Hídrica:'t-h',Térmica:'t-th',Várias:'t-v'};
 
-const NUMS = [35,34,33,32,31,30,29,28,27,26,25,24,23,22,21,20,19,18,17,16,15,14,13,12,11,10,9,8,7,6,5,4,3,2,1];
-const CNUMS = [...NUMS].sort((a,b)=>a-b);
+// Dados que o futuro script Python poderá atualizar automaticamente.
+// Os valores calculáveis de cada leilão são derivados abaixo a partir dos lotes.
+const NEXT_AUCTIONS = [
+  {num:36, tipo:'Leilão GO-PT', date:'08 jul 2026'},
+  {num:37, tipo:'Leilão GO-PT', date:'09 set 2026'},
+  {num:38, tipo:'Leilão GO-PT', date:'11 nov 2026'},
+];
+
+let NUMS = [];
+let CNUMS = [];
+
+function recalcAuction(a){
+  const lotes = a.lotes || [];
+  a.lots = lotes.length;
+  a.totalLei = lotes.reduce((s,l)=>s + Number(l.leiloado || 0), 0);
+  a.totalVen = lotes.reduce((s,l)=>s + Number(l.vendido || 0), 0);
+  a.receita = lotes.reduce((s,l)=>s + Number(l.vendido || 0) * Number(l.preco || 0), 0);
+  a.feeOmip = a.totalVen * 0.005;
+  a.avgPrice = a.totalVen ? a.receita / a.totalVen : 0;
+  a.taxaColocacao = a.totalLei ? (a.totalVen / a.totalLei) * 100 : 0;
+  return a;
+}
+
+function normalizeAuctions(){
+  Object.values(AUCTIONS).forEach(recalcAuction);
+  CNUMS = Object.keys(AUCTIONS).map(Number).sort((a,b)=>a-b);
+  NUMS = [...CNUMS].sort((a,b)=>b-a);
+}
 let cur = 'overview';
 
 // ── HELPERS ─────────────────────────────────────────────────────────────────
@@ -1864,6 +1894,39 @@ function buildSelect(){
     o.textContent=`${n}.º Leilão — ${a.date||''}`;
     sel.appendChild(o);
   });
+}
+
+function buildOverviewKPIs(){
+  const nums = Object.keys(AUCTIONS).map(Number);
+  const totalVen     = nums.reduce((s,n) => s + AUCTIONS[n].totalVen, 0);
+  const totalLei     = nums.reduce((s,n) => s + AUCTIONS[n].totalLei, 0);
+  const totalReceita = nums.reduce((s,n) => s + AUCTIONS[n].receita, 0);
+  const totalFee     = nums.reduce((s,n) => s + AUCTIONS[n].feeOmip, 0);
+  const taxaColocacao = totalLei ? (totalVen / totalLei) * 100 : 0;
+  const count        = nums.length;
+  const sorted       = nums.sort((a,b)=>a-b);
+  const first        = AUCTIONS[sorted[0]];
+  const last         = AUCTIONS[sorted[sorted.length-1]];
+
+  // título
+  document.getElementById('ovTitle').textContent =
+    `${count} leilões realizados · ${first.date.split(' ').slice(1).join(' ')} — ${last.date}`;
+  document.getElementById('auctionCountBadge').textContent = count;
+
+  // volume vendido/transacionado
+  const volM = (totalVen / 1e6).toFixed(1).replace('.',',');
+  document.getElementById('ovVolume').textContent = volM + ' M MWh';
+  document.getElementById('ovVolumeSub').textContent = `${fn(totalVen)} MWh vendidos de ${fn(totalLei)} MWh leiloados`;
+
+  // taxa de colocação
+  document.getElementById('ovPlacement').textContent = taxaColocacao.toFixed(1).replace('.',',') + '%';
+  document.getElementById('ovPlacementSub').textContent = `${count} leilões realizados`;
+
+  // receita
+  document.getElementById('ovReceita').textContent = fe(totalReceita);
+
+  // fee
+  document.getElementById('ovFee').textContent = fe(totalFee);
 }
 
 // ── NAVIGATION ───────────────────────────────────────────────────────────────
@@ -1941,7 +2004,7 @@ function buildOvCards(){
     el.onclick=()=>showPage(n);
     el.innerHTML=`<div class="ov-num">${n}.º Leilão GO-PT</div>
       <div class="ov-date">${a.date}</div>
-      <div class="ov-vol">${(a.totalVol/1e6).toFixed(2).replace('.',',')}M MWh</div>
+      <div class="ov-vol">${(a.totalVen/1e6).toFixed(2).replace('.',',')}M MWh</div>
       <div class="ov-price">${a.avgPrice.toFixed(2).replace('.',',')} €/MWh ${trend}</div>
       <div class="ov-tags"><span class="ov-tag">${a.lots} lotes</span><span class="ov-tag">${a.participants} compradores</span></div>`;
     g.appendChild(el);
@@ -1988,14 +2051,14 @@ function buildPages(){
 
     cont.innerHTML+=`<div class="page" id="page-${num}">
       <div class="page-header">
-        <h1>${num}.º Leilão de Garantias de Origem<span class="status-ok">✓ 100% colocação</span></h1>
+        <h1>${num}.º Leilão de Garantias de Origem<span class="status-ok">✓ ${a.taxaColocacao.toFixed(1).replace('.',',')}% colocação</span></h1>
         <p>OMIP SA · ${a.date} · Resultados oficiais</p>
       </div>
       <div class="kpi-grid">
         <div class="kpi-card">
           <div class="kpi-icon ic-amber"><svg viewBox="0 0 24 24"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg></div>
           <div class="kpi-label">Volume transacionado</div>
-          <div class="kpi-value">${(a.totalVol/1e6).toFixed(2).replace('.',',')}MWh</div>
+          <div class="kpi-value">${(a.totalVen/1e6).toFixed(2).replace('.',',')}MWh</div>
           <div class="kpi-sub">${a.lots} lotes</div>
         </div>
         <div class="kpi-card">
@@ -2019,7 +2082,7 @@ function buildPages(){
       </div>
       <div class="card mb16">
         <div class="card-title">Resultados por lote</div>
-        <div class="card-sub">${a.lots} lotes com colocação total</div>
+        <div class="card-sub">${a.lots} lotes · ${a.taxaColocacao.toFixed(1).replace('.',',')}% de colocação</div>
         <div class="dt-wrap"><table class="dt">
           <thead><tr>
             <th>Lote</th><th>Tecnologia</th><th>Período</th>
@@ -2029,8 +2092,8 @@ function buildPages(){
           <tbody>${lotRows}</tbody>
           <tfoot><tr>
             <td colspan="3">Total</td>
-            <td class="r mono">${fn(a.totalLeiloado||a.totalVol)}</td>
-            <td class="r mono">${fn(a.totalVol)}</td>
+            <td class="r mono">${fn(a.totalLei)}</td>
+            <td class="r mono">${fn(a.totalVen)}</td>
             <td class="r mono">${a.avgPrice.toFixed(2).replace('.',',')} (méd.)</td>
             <td class="r">${a.participants}</td>
           </tr></tfoot>
@@ -2050,7 +2113,7 @@ function buildPages(){
       </div>
       <div class="g4">
         <div class="fin-item"><div class="fin-label">Receita total</div><div class="fin-value">${fe(a.receita)}</div><div class="fin-desc">Σ vol. vendido × preço marginal</div></div>
-        <div class="fin-item"><div class="fin-label">Fee OMIP SA</div><div class="fin-value">${fe(a.feeOmip)}</div><div class="fin-desc">0,005 €/MWh × ${fn(a.totalVol)} MWh</div></div>
+        <div class="fin-item"><div class="fin-label">Fee OMIP SA</div><div class="fin-value">${fe(a.feeOmip)}</div><div class="fin-desc">0,005 €/MWh × ${fn(a.totalVen)} MWh</div></div>
         <div class="fin-item"><div class="fin-label">Garantias prestadas</div><div class="fin-value">${fe(a.garantias)}</div><div class="fin-desc">${a.participants} participantes</div></div>
         <div class="fin-item"><div class="fin-label">Rácio de cobertura</div><div class="fin-value">≈ ${racio}×</div><div class="fin-desc">garantias / receita</div></div>
       </div>
@@ -2096,9 +2159,34 @@ function buildCharts(){
     scales:{x:base.scales.x,y:{...base.scales.y,min:0,ticks:{...ticks,callback:v=>(v/1e3).toFixed(0)+'K€'}}}}});
 }
 
+function buildFutureAuctions(){
+  const cont=document.getElementById('futureAuctions');
+  const sub=document.getElementById('futureAuctionsSub');
+  if(!cont)return;
+  cont.innerHTML='';
+  const futuros=[...NEXT_AUCTIONS].sort((a,b)=>a.num-b.num);
+  if(sub){
+    const anos=[...new Set(futuros.map(a=>String(a.date).split(' ').pop()).filter(Boolean))];
+    sub.textContent = anos.length ? `Calendário OMIP ${anos.join(' / ')}` : 'Calendário OMIP';
+  }
+  if(!futuros.length){
+    cont.innerHTML='<div class="fut-item"><div><div class="fut-lbl">Sem próximos leilões carregados</div><div class="fut-date">Atualizar a lista NEXT_AUCTIONS</div></div></div>';
+    return;
+  }
+  futuros.forEach(a=>{
+    const el=document.createElement('div');
+    el.className='fut-item';
+    el.innerHTML=`<div class="fut-num">${a.num}</div><div><div class="fut-lbl">${a.tipo || 'Leilão GO-PT'}</div><div class="fut-date">${a.date || 'data a definir'}</div></div>`;
+    cont.appendChild(el);
+  });
+}
+
 // ── INIT ──────────────────────────────────────────────────────────────────────
+normalizeAuctions();
 buildSelect();
+buildOverviewKPIs();
 buildOvCards();
+buildFutureAuctions();
 buildPages();
 buildCharts();
 </script>
