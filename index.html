@@ -1978,7 +1978,23 @@ const TCLS={Solar:'t-s',Eólica:'t-e',Hídrica:'t-h',Térmica:'t-th',Várias:'t-
 
 // Dados que o futuro script Python poderá atualizar automaticamente.
 // Os valores calculáveis de cada leilão são derivados abaixo a partir dos lotes.
-const NEXT_AUCTIONS = [];
+const NEXT_AUCTIONS = [
+  {
+    "num": 36,
+    "date": "08 jul 2026",
+    "label": "Leilão GO-PT"
+  },
+  {
+    "num": 37,
+    "date": "09 set 2026",
+    "label": "Leilão GO-PT"
+  },
+  {
+    "num": 38,
+    "date": "11 nov 2026",
+    "label": "Leilão GO-PT"
+  }
+];
 
 let NUMS = [];
 let CNUMS = [];
@@ -2312,7 +2328,7 @@ function buildFutureAuctions(){
     sub.textContent = anos.length ? `Calendário OMIP ${anos.join(' / ')}` : 'Calendário OMIP';
   }
   if(!futuros.length){
-    cont.innerHTML='<div class="fut-item"><div><div class="fut-lbl">Sem próximos leilões carregados</div><div class="fut-date">Atualizar a lista NEXT_AUCTIONS</div></div></div>';
+    cont.innerHTML='<div class="fut-item"><div><div class="fut-lbl">Calendário OMIP ainda não publicado</div><div class="fut-date">A secção será atualizada automaticamente quando a OMIP publicar novas datas</div></div></div>';
     return;
   }
   futuros.forEach(a=>{
